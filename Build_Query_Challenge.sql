@@ -1,0 +1,11 @@
+--Daniel Diaz 103547416
+
+--TOUR (TourName, Description)
+--Primary Key (TourName)
+--EVENT (TourName, EventYear, EventMonth, EventDay, Fee)
+--Primary Key (EventYear, EventMonth, EventDay)
+--Foreign Key (TourName) References TOUR
+--BOOKING (ClientID, EventYear, EventMonth, EventDay, DateBooked, Payment)
+--ForeignKey (ClientID, EventYear, EventMonth, EventDay) References EVENT, CLIENT
+--CLIENT (ClientID, Surname, GivenName, Gender)
+--Primary Key (ClientID)

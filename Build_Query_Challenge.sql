@@ -83,6 +83,22 @@ INSERT INTO BOOKING (ClientID, TourName, EventMonth, EventDay, EventYear, Paymen
 SELECT * FROM CLIENT
 
 --Task 4
+
+--Query 1
+SELECT C.ClientID, C.GivenName, C.Surname, B.TourName, T.DESCRIPTION, E.EventYear, E.EventMonth, E.EventDay, E.EventFee, B.DateBooked, B.Payment 
+FROM BOOKING B
+INNER JOIN CLIENT C ON 
+C.CLIENTID = B.ClientID
+INNER JOIN EVENT E ON
+E.EventDay = B.EventDay
+INNER JOIN TOUR T ON 
+T.TourName = B.TourName
+
+--Query 2
+SELECT EventMonth, TourName COUNT (TourName)
+FROM BOOKING B
+GROUP BY TourName;
+
 SELECT * FROM TOUR
 SELECT * FROM CLIENT
 SELECT * FROM EVENT

@@ -34,7 +34,7 @@ CREATE TABLE EVENT (
    ,EventDay    INT CHECK (EventDay >=1 and EventDay <= 31)
    ,EventYear   INT
    ,EventFee    MONEY NOT NULL CHECK (EventFee > 0)
-   ,PRIMARY KEY (EventMonth, EventDay, EventFee)
+   ,PRIMARY KEY (EventMonth, EventDay, EventYear, TourName)
    ,FOREIGN KEY (TourName) REFERENCES TOUR  
 )
 
@@ -44,16 +44,49 @@ CREATE TABLE BOOKING (
    ,EventMonth  NVARCHAR (3) CHECK (EventMonth IN ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'))
    ,EventDay    INT CHECK (EventDay >=1 and EventDay <= 31)
    ,EventYear   INT
-   ,EventFee    MONEY NOT NULL CHECK (EventFee > 0)
    ,Payment     MONEY CHECK (Payment > 0)
    ,DateBooked  DATE NOT NULL
-   ,PRIMARY KEY (ClientID, TourName, EventMonth, EventDay, EventFee)
+   ,PRIMARY KEY (ClientID, TourName, EventMonth, EventDay, EventYear)
    ,FOREIGN KEY (ClientID) REFERENCES CLIENT
    ,FOREIGN KEY (TourName) REFERENCES TOUR
-   ,FOREIGN KEY (EventMonth, EventDay, EventFee) REFERENCES EVENT
+   ,FOREIGN KEY (EventMonth, EventDay, EventYear, TourName) REFERENCES EVENT
 )
 
+SELECT * FROM INFORMATION_SCHEMA.TABLES
+--Task 3
+INSERT INTO TOUR (TourName, Description) VALUES ('North', 'Tour of wineries and outlets of the Bedigo and Castlemaine region'),
+('South', 'Tour of wineries and outlets of Mornington Penisula'),
+('West', 'Tour of wineries and outlets of the Geelong and Otways Region');
 
+INSERT INTO CLIENT (ClientID, Surname, GivenName, Gender) VALUES (1, 'Price', 'Taylor', 'M'),
+(2, 'Gamble', 'Ellyse', 'F'),
+(3, 'Tan', 'Tilly', 'F'),
+(103547416, 'Diaz', 'Daniel', 'M');
+
+INSERT INTO EVENT (TourName, EventMonth, EventDay, EventYear, EventFee) VALUES ('North', 'Jan', 9, 2016, 200),
+('North', 'Feb', 13, 2016, 225),
+('South', 'Jan', 9, 2016, 200),
+('South', 'Jan', 16, 2016, 200),
+('West', 'Jan', 29, 2016, 225);
+
+INSERT INTO BOOKING (ClientID, TourName, EventMonth, EventDay, EventYear, Payment, DateBooked) VALUES (1, 'North', 'Jan', 9, 2016, 200,' 2015-12-10'),
+(2, 'North', 'Jan', 9, 2016, 200, '2015-12-10'),
+(1, 'North', 'Feb', 13, 2016, 225, '2016-8-1'),
+(2, 'North', 'Feb', 13, 2016, 125, '2016-1-14'),
+(3, 'North', 'Feb', 13, 2016, 225, '2016-3-2'),
+(1, 'South', 'Jan', 9, 2016, 200, '2015-12-10'),
+(2, 'South', 'Jan', 16, 2016, 200, '2015-10-18'),
+(3, 'South', 'Jan', 16, 2016, 225, '2016-1-9'),
+(2, 'West', 'Jan', 29, 2016, 225, '2015-12-17'),
+(3, 'West', 'Jan', 29, 2016, 200, '2015-12-18');
+
+SELECT * FROM CLIENT
+
+--Task 4
+SELECT * FROM TOUR
+SELECT * FROM CLIENT
+SELECT * FROM EVENT
+SELECT * FROM BOOKING
 DROP TABLE TOUR
 DROP TABLE EVENT
 DROP TABLE CLIENT
